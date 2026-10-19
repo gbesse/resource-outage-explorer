@@ -1,0 +1,5 @@
+include README*.md LICENSE package.json package-lock.json
+recursive-include outage_explorer/web *
+recursive-include outage_explorer/examples *.json
+recursive-include tests *.py *.mjs
+recursive-include .github *.yml

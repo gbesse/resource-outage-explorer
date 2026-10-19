@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "resource-outage-explorer"
+version = "0.1.0a1"
+description = "Pannes de ressources partagées · Shared resource outages · Fallos de recursos compartidos"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = []
+
+[project.scripts]
+outage-explorer = "outage_explorer.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["outage_explorer*"]
+
+[tool.setuptools.package-data]
+outage_explorer = ["web/*", "examples/*"]

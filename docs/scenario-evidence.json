@@ -1,0 +1,878 @@
+{
+  "source_case": {
+    "synthetic": true,
+    "units": {
+      "fr": "créneaux de capacité d’exercice interchangeables",
+      "en": "interchangeable exercise capacity slots",
+      "es": "unidades intercambiables de capacidad de ejercicio"
+    },
+    "resources": [
+      {
+        "id": "depot-main",
+        "capacity": 6,
+        "serves": [
+          "north",
+          "east",
+          "south"
+        ]
+      },
+      {
+        "id": "depot-mobile",
+        "capacity": 2,
+        "serves": [
+          "north",
+          "east"
+        ]
+      },
+      {
+        "id": "remote-mobile",
+        "capacity": 2,
+        "serves": [
+          "south"
+        ]
+      }
+    ],
+    "demands": [
+      {
+        "id": "north",
+        "need": 3
+      },
+      {
+        "id": "east",
+        "need": 3
+      },
+      {
+        "id": "south",
+        "need": 2
+      }
+    ],
+    "outages": [
+      {
+        "id": "shared-depot-loss",
+        "cost": 1,
+        "disables": [
+          "depot-main",
+          "depot-mobile"
+        ]
+      },
+      {
+        "id": "main-device-loss",
+        "cost": 1,
+        "disables": [
+          "depot-main"
+        ]
+      },
+      {
+        "id": "remote-device-loss",
+        "cost": 1,
+        "disables": [
+          "remote-mobile"
+        ]
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "larger-main-device",
+        "cost": 2,
+        "increase": {
+          "depot-main": 4
+        }
+      },
+      {
+        "id": "backup-in-same-depot",
+        "cost": 2,
+        "add": {
+          "id": "shared-backup",
+          "capacity": 3,
+          "serves": [
+            "north",
+            "east",
+            "south"
+          ]
+        },
+        "exposed_to": [
+          "shared-depot-loss"
+        ]
+      },
+      {
+        "id": "independent-backup",
+        "cost": 2,
+        "add": {
+          "id": "independent-backup",
+          "capacity": 3,
+          "serves": [
+            "north",
+            "east",
+            "south"
+          ]
+        },
+        "exposed_to": []
+      }
+    ]
+  },
+  "baseline": {
+    "scenarios_checked": 4,
+    "distinct_disabled_sets": 4,
+    "budget": 1,
+    "worst": {
+      "events": [
+        "shared-depot-loss"
+      ],
+      "event_cost": 1,
+      "shortfall": 6,
+      "flow": {
+        "case_sha256": "03bbdea291a766136e0b7f2760e1e9308e72c59cb306cd9745c4b4b82ce3bcdc",
+        "disabled": [
+          "depot-main",
+          "depot-mobile"
+        ],
+        "delivered_units": 2,
+        "total_need": 8,
+        "allocations": [
+          {
+            "resource": "remote-mobile",
+            "demand": "south",
+            "units": 2
+          }
+        ],
+        "unmet": {
+          "north": 3,
+          "east": 3,
+          "south": 0
+        },
+        "source_side_cut": [
+          "source"
+        ],
+        "cut_edges": [
+          {
+            "from": "source",
+            "to": "resource:depot-main",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:depot-mobile",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:remote-mobile",
+            "capacity": 2
+          }
+        ],
+        "cut_capacity": 2,
+        "certificate": {
+          "valid": true,
+          "errors": [],
+          "feasible_allocation_units": 2,
+          "independent_cut_capacity": 2,
+          "maximum_flow_proven": true,
+          "scope": "supplied_integer_bipartite_capacity_model"
+        }
+      }
+    },
+    "minimal_failing_event_sets": [
+      [
+        "shared-depot-loss"
+      ],
+      [
+        "main-device-loss"
+      ]
+    ],
+    "all_scenarios": [
+      {
+        "events": [],
+        "event_cost": 0,
+        "shortfall": 0,
+        "flow": {
+          "case_sha256": "03bbdea291a766136e0b7f2760e1e9308e72c59cb306cd9745c4b4b82ce3bcdc",
+          "disabled": [],
+          "delivered_units": 8,
+          "total_need": 8,
+          "allocations": [
+            {
+              "resource": "depot-main",
+              "demand": "north",
+              "units": 3
+            },
+            {
+              "resource": "depot-main",
+              "demand": "east",
+              "units": 3
+            },
+            {
+              "resource": "remote-mobile",
+              "demand": "south",
+              "units": 2
+            }
+          ],
+          "unmet": {
+            "north": 0,
+            "east": 0,
+            "south": 0
+          },
+          "source_side_cut": [
+            "demand:east",
+            "demand:north",
+            "demand:south",
+            "resource:depot-main",
+            "resource:depot-mobile",
+            "resource:remote-mobile",
+            "source"
+          ],
+          "cut_edges": [
+            {
+              "from": "demand:north",
+              "to": "sink",
+              "capacity": 3
+            },
+            {
+              "from": "demand:east",
+              "to": "sink",
+              "capacity": 3
+            },
+            {
+              "from": "demand:south",
+              "to": "sink",
+              "capacity": 2
+            }
+          ],
+          "cut_capacity": 8,
+          "certificate": {
+            "valid": true,
+            "errors": [],
+            "feasible_allocation_units": 8,
+            "independent_cut_capacity": 8,
+            "maximum_flow_proven": true,
+            "scope": "supplied_integer_bipartite_capacity_model"
+          }
+        }
+      },
+      {
+        "events": [
+          "shared-depot-loss"
+        ],
+        "event_cost": 1,
+        "shortfall": 6,
+        "flow": {
+          "case_sha256": "03bbdea291a766136e0b7f2760e1e9308e72c59cb306cd9745c4b4b82ce3bcdc",
+          "disabled": [
+            "depot-main",
+            "depot-mobile"
+          ],
+          "delivered_units": 2,
+          "total_need": 8,
+          "allocations": [
+            {
+              "resource": "remote-mobile",
+              "demand": "south",
+              "units": 2
+            }
+          ],
+          "unmet": {
+            "north": 3,
+            "east": 3,
+            "south": 0
+          },
+          "source_side_cut": [
+            "source"
+          ],
+          "cut_edges": [
+            {
+              "from": "source",
+              "to": "resource:depot-main",
+              "capacity": 0
+            },
+            {
+              "from": "source",
+              "to": "resource:depot-mobile",
+              "capacity": 0
+            },
+            {
+              "from": "source",
+              "to": "resource:remote-mobile",
+              "capacity": 2
+            }
+          ],
+          "cut_capacity": 2,
+          "certificate": {
+            "valid": true,
+            "errors": [],
+            "feasible_allocation_units": 2,
+            "independent_cut_capacity": 2,
+            "maximum_flow_proven": true,
+            "scope": "supplied_integer_bipartite_capacity_model"
+          }
+        }
+      },
+      {
+        "events": [
+          "main-device-loss"
+        ],
+        "event_cost": 1,
+        "shortfall": 4,
+        "flow": {
+          "case_sha256": "03bbdea291a766136e0b7f2760e1e9308e72c59cb306cd9745c4b4b82ce3bcdc",
+          "disabled": [
+            "depot-main"
+          ],
+          "delivered_units": 4,
+          "total_need": 8,
+          "allocations": [
+            {
+              "resource": "depot-mobile",
+              "demand": "north",
+              "units": 2
+            },
+            {
+              "resource": "remote-mobile",
+              "demand": "south",
+              "units": 2
+            }
+          ],
+          "unmet": {
+            "north": 1,
+            "east": 3,
+            "south": 0
+          },
+          "source_side_cut": [
+            "source"
+          ],
+          "cut_edges": [
+            {
+              "from": "source",
+              "to": "resource:depot-main",
+              "capacity": 0
+            },
+            {
+              "from": "source",
+              "to": "resource:depot-mobile",
+              "capacity": 2
+            },
+            {
+              "from": "source",
+              "to": "resource:remote-mobile",
+              "capacity": 2
+            }
+          ],
+          "cut_capacity": 4,
+          "certificate": {
+            "valid": true,
+            "errors": [],
+            "feasible_allocation_units": 4,
+            "independent_cut_capacity": 4,
+            "maximum_flow_proven": true,
+            "scope": "supplied_integer_bipartite_capacity_model"
+          }
+        }
+      },
+      {
+        "events": [
+          "remote-device-loss"
+        ],
+        "event_cost": 1,
+        "shortfall": 0,
+        "flow": {
+          "case_sha256": "03bbdea291a766136e0b7f2760e1e9308e72c59cb306cd9745c4b4b82ce3bcdc",
+          "disabled": [
+            "remote-mobile"
+          ],
+          "delivered_units": 8,
+          "total_need": 8,
+          "allocations": [
+            {
+              "resource": "depot-main",
+              "demand": "north",
+              "units": 1
+            },
+            {
+              "resource": "depot-main",
+              "demand": "east",
+              "units": 3
+            },
+            {
+              "resource": "depot-main",
+              "demand": "south",
+              "units": 2
+            },
+            {
+              "resource": "depot-mobile",
+              "demand": "north",
+              "units": 2
+            }
+          ],
+          "unmet": {
+            "north": 0,
+            "east": 0,
+            "south": 0
+          },
+          "source_side_cut": [
+            "source"
+          ],
+          "cut_edges": [
+            {
+              "from": "source",
+              "to": "resource:depot-main",
+              "capacity": 6
+            },
+            {
+              "from": "source",
+              "to": "resource:depot-mobile",
+              "capacity": 2
+            },
+            {
+              "from": "source",
+              "to": "resource:remote-mobile",
+              "capacity": 0
+            }
+          ],
+          "cut_capacity": 8,
+          "certificate": {
+            "valid": true,
+            "errors": [],
+            "feasible_allocation_units": 8,
+            "independent_cut_capacity": 8,
+            "maximum_flow_proven": true,
+            "scope": "supplied_integer_bipartite_capacity_model"
+          }
+        }
+      }
+    ],
+    "exhaustive_within_catalog_and_budget": true
+  },
+  "upgrade_comparisons": [
+    {
+      "upgrade": "larger-main-device",
+      "cost": 2,
+      "worst_shortfall": 6,
+      "worst_events": [
+        "shared-depot-loss"
+      ],
+      "worst_flow_certificate": {
+        "case_sha256": "310470eae1d6141b4e11a9e5f7c23593f2b574ed78beac4c1d5ba38d445deb8e",
+        "disabled": [
+          "depot-main",
+          "depot-mobile"
+        ],
+        "delivered_units": 2,
+        "total_need": 8,
+        "allocations": [
+          {
+            "resource": "remote-mobile",
+            "demand": "south",
+            "units": 2
+          }
+        ],
+        "unmet": {
+          "north": 3,
+          "east": 3,
+          "south": 0
+        },
+        "source_side_cut": [
+          "source"
+        ],
+        "cut_edges": [
+          {
+            "from": "source",
+            "to": "resource:depot-main",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:depot-mobile",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:remote-mobile",
+            "capacity": 2
+          }
+        ],
+        "cut_capacity": 2,
+        "certificate": {
+          "valid": true,
+          "errors": [],
+          "feasible_allocation_units": 2,
+          "independent_cut_capacity": 2,
+          "maximum_flow_proven": true,
+          "scope": "supplied_integer_bipartite_capacity_model"
+        }
+      },
+      "modified_case": {
+        "synthetic": true,
+        "units": {
+          "fr": "créneaux de capacité d’exercice interchangeables",
+          "en": "interchangeable exercise capacity slots",
+          "es": "unidades intercambiables de capacidad de ejercicio"
+        },
+        "resources": [
+          {
+            "id": "depot-main",
+            "capacity": 10,
+            "serves": [
+              "north",
+              "east",
+              "south"
+            ]
+          },
+          {
+            "id": "depot-mobile",
+            "capacity": 2,
+            "serves": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "id": "remote-mobile",
+            "capacity": 2,
+            "serves": [
+              "south"
+            ]
+          }
+        ],
+        "demands": [
+          {
+            "id": "north",
+            "need": 3
+          },
+          {
+            "id": "east",
+            "need": 3
+          },
+          {
+            "id": "south",
+            "need": 2
+          }
+        ],
+        "outages": [
+          {
+            "id": "shared-depot-loss",
+            "cost": 1,
+            "disables": [
+              "depot-main",
+              "depot-mobile"
+            ]
+          },
+          {
+            "id": "main-device-loss",
+            "cost": 1,
+            "disables": [
+              "depot-main"
+            ]
+          },
+          {
+            "id": "remote-device-loss",
+            "cost": 1,
+            "disables": [
+              "remote-mobile"
+            ]
+          }
+        ],
+        "upgrades": []
+      }
+    },
+    {
+      "upgrade": "backup-in-same-depot",
+      "cost": 2,
+      "worst_shortfall": 6,
+      "worst_events": [
+        "shared-depot-loss"
+      ],
+      "worst_flow_certificate": {
+        "case_sha256": "a806da4d6d6d9cf653b3c49bdc8f184806cfb663e934b46ece060a935202d1b5",
+        "disabled": [
+          "depot-main",
+          "depot-mobile",
+          "shared-backup"
+        ],
+        "delivered_units": 2,
+        "total_need": 8,
+        "allocations": [
+          {
+            "resource": "remote-mobile",
+            "demand": "south",
+            "units": 2
+          }
+        ],
+        "unmet": {
+          "north": 3,
+          "east": 3,
+          "south": 0
+        },
+        "source_side_cut": [
+          "source"
+        ],
+        "cut_edges": [
+          {
+            "from": "source",
+            "to": "resource:depot-main",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:depot-mobile",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:remote-mobile",
+            "capacity": 2
+          },
+          {
+            "from": "source",
+            "to": "resource:shared-backup",
+            "capacity": 0
+          }
+        ],
+        "cut_capacity": 2,
+        "certificate": {
+          "valid": true,
+          "errors": [],
+          "feasible_allocation_units": 2,
+          "independent_cut_capacity": 2,
+          "maximum_flow_proven": true,
+          "scope": "supplied_integer_bipartite_capacity_model"
+        }
+      },
+      "modified_case": {
+        "synthetic": true,
+        "units": {
+          "fr": "créneaux de capacité d’exercice interchangeables",
+          "en": "interchangeable exercise capacity slots",
+          "es": "unidades intercambiables de capacidad de ejercicio"
+        },
+        "resources": [
+          {
+            "id": "depot-main",
+            "capacity": 6,
+            "serves": [
+              "north",
+              "east",
+              "south"
+            ]
+          },
+          {
+            "id": "depot-mobile",
+            "capacity": 2,
+            "serves": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "id": "remote-mobile",
+            "capacity": 2,
+            "serves": [
+              "south"
+            ]
+          },
+          {
+            "id": "shared-backup",
+            "capacity": 3,
+            "serves": [
+              "north",
+              "east",
+              "south"
+            ]
+          }
+        ],
+        "demands": [
+          {
+            "id": "north",
+            "need": 3
+          },
+          {
+            "id": "east",
+            "need": 3
+          },
+          {
+            "id": "south",
+            "need": 2
+          }
+        ],
+        "outages": [
+          {
+            "id": "shared-depot-loss",
+            "cost": 1,
+            "disables": [
+              "depot-main",
+              "depot-mobile",
+              "shared-backup"
+            ]
+          },
+          {
+            "id": "main-device-loss",
+            "cost": 1,
+            "disables": [
+              "depot-main"
+            ]
+          },
+          {
+            "id": "remote-device-loss",
+            "cost": 1,
+            "disables": [
+              "remote-mobile"
+            ]
+          }
+        ],
+        "upgrades": []
+      }
+    },
+    {
+      "upgrade": "independent-backup",
+      "cost": 2,
+      "worst_shortfall": 3,
+      "worst_events": [
+        "shared-depot-loss"
+      ],
+      "worst_flow_certificate": {
+        "case_sha256": "dd18963c96c5606db43afd0499643713178aae7c70ebd30517101e38f00c3857",
+        "disabled": [
+          "depot-main",
+          "depot-mobile"
+        ],
+        "delivered_units": 5,
+        "total_need": 8,
+        "allocations": [
+          {
+            "resource": "remote-mobile",
+            "demand": "south",
+            "units": 2
+          },
+          {
+            "resource": "independent-backup",
+            "demand": "north",
+            "units": 3
+          }
+        ],
+        "unmet": {
+          "north": 0,
+          "east": 3,
+          "south": 0
+        },
+        "source_side_cut": [
+          "source"
+        ],
+        "cut_edges": [
+          {
+            "from": "source",
+            "to": "resource:depot-main",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:depot-mobile",
+            "capacity": 0
+          },
+          {
+            "from": "source",
+            "to": "resource:remote-mobile",
+            "capacity": 2
+          },
+          {
+            "from": "source",
+            "to": "resource:independent-backup",
+            "capacity": 3
+          }
+        ],
+        "cut_capacity": 5,
+        "certificate": {
+          "valid": true,
+          "errors": [],
+          "feasible_allocation_units": 5,
+          "independent_cut_capacity": 5,
+          "maximum_flow_proven": true,
+          "scope": "supplied_integer_bipartite_capacity_model"
+        }
+      },
+      "modified_case": {
+        "synthetic": true,
+        "units": {
+          "fr": "créneaux de capacité d’exercice interchangeables",
+          "en": "interchangeable exercise capacity slots",
+          "es": "unidades intercambiables de capacidad de ejercicio"
+        },
+        "resources": [
+          {
+            "id": "depot-main",
+            "capacity": 6,
+            "serves": [
+              "north",
+              "east",
+              "south"
+            ]
+          },
+          {
+            "id": "depot-mobile",
+            "capacity": 2,
+            "serves": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "id": "remote-mobile",
+            "capacity": 2,
+            "serves": [
+              "south"
+            ]
+          },
+          {
+            "id": "independent-backup",
+            "capacity": 3,
+            "serves": [
+              "north",
+              "east",
+              "south"
+            ]
+          }
+        ],
+        "demands": [
+          {
+            "id": "north",
+            "need": 3
+          },
+          {
+            "id": "east",
+            "need": 3
+          },
+          {
+            "id": "south",
+            "need": 2
+          }
+        ],
+        "outages": [
+          {
+            "id": "shared-depot-loss",
+            "cost": 1,
+            "disables": [
+              "depot-main",
+              "depot-mobile"
+            ]
+          },
+          {
+            "id": "main-device-loss",
+            "cost": 1,
+            "disables": [
+              "depot-main"
+            ]
+          },
+          {
+            "id": "remote-device-loss",
+            "cost": 1,
+            "disables": [
+              "remote-mobile"
+            ]
+          }
+        ],
+        "upgrades": []
+      }
+    }
+  ],
+  "best_single_catalog_upgrade": "independent-backup",
+  "investment_budget": 2,
+  "model": "synthetic_exercise_integer_capacity_model",
+  "dispatch_performed": false,
+  "outage_probabilities_estimated": false
+}
