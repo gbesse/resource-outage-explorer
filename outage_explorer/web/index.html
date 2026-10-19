@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Resource Outage Explorer</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/">RESOURCE / OUTAGE EXPLORER</a>
+      <nav aria-label="Language">
+        <a href="?lang=fr">FR</a><a href="?lang=en">EN</a><a href="?lang=es">ES</a>
+      </nav>
+    </header>
+    <main>
+      <section class="intro">
+        <p class="eyebrow" data-i18n="eyebrow"></p>
+        <h1 data-i18n="title"></h1>
+        <p class="lede" data-i18n="lede"></p>
+      </section>
+      <section class="workspace">
+        <aside>
+          <span class="number">01 /</span>
+          <h2 data-i18n="stress"></h2>
+          <label class="field" for="outage-budget" data-i18n="outageBudget"></label
+          ><select id="outage-budget">
+            <option>0</option>
+            <option selected>1</option>
+            <option>2</option>
+            <option>3</option></select
+          ><label class="field" for="investment-budget" data-i18n="investmentBudget"></label
+          ><select id="investment-budget">
+            <option>0</option>
+            <option>1</option>
+            <option selected>2</option></select
+          ><button id="analyze" data-i18n="analyze"></button>
+          <p role="status" id="status"></p>
+          <p class="hint" data-i18n="units"></p>
+          <p class="hint" data-i18n="exercise"></p>
+        </aside>
+        <article>
+          <div class="section-head">
+            <div>
+              <span class="number">02 /</span>
+              <h2 data-i18n="worst"></h2>
+            </div>
+            <span class="badge" data-i18n="certified"></span>
+          </div>
+          <div class="metrics">
+            <div><strong id="shortfall">—</strong><span data-i18n="shortfall"></span></div>
+            <div><strong id="scenarios">—</strong><span data-i18n="scenarios"></span></div>
+            <div><strong id="cut">—</strong><span data-i18n="cut"></span></div>
+          </div>
+          <p id="events"></p>
+          <svg
+            id="network"
+            viewBox="0 0 650 280"
+            role="img"
+            aria-label="Allocation / Asignación"
+          ></svg>
+          <h3 data-i18n="certificate"></h3>
+          <div id="certificate"></div>
+          <h3 data-i18n="upgrades"></h3>
+          <div id="upgrades"></div>
+          <div class="actions">
+            <button class="secondary" id="download" data-i18n="download"></button
+            ><code id="digest"></code>
+          </div>
+        </article>
+      </section>
+      <footer>
+        <p data-i18n="limits"></p>
+        <a href="https://github.com/gbesse/resource-outage-explorer">GitHub ↗</a>
+      </footer>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "synthetic": true,
+  "units": {"fr":"créneaux de capacité d’exercice interchangeables","en":"interchangeable exercise capacity slots","es":"unidades intercambiables de capacidad de ejercicio"},
+  "resources": [
+    {"id":"depot-main","capacity":6,"serves":["north","east","south"]},
+    {"id":"depot-mobile","capacity":2,"serves":["north","east"]},
+    {"id":"remote-mobile","capacity":2,"serves":["south"]}
+  ],
+  "demands": [{"id":"north","need":3},{"id":"east","need":3},{"id":"south","need":2}],
+  "outages": [
+    {"id":"shared-depot-loss","cost":1,"disables":["depot-main","depot-mobile"]},
+    {"id":"main-device-loss","cost":1,"disables":["depot-main"]},
+    {"id":"remote-device-loss","cost":1,"disables":["remote-mobile"]}
+  ],
+  "upgrades": [
+    {"id":"larger-main-device","cost":2,"increase":{"depot-main":4}},
+    {"id":"backup-in-same-depot","cost":2,"add":{"id":"shared-backup","capacity":3,"serves":["north","east","south"]},"exposed_to":["shared-depot-loss"]},
+    {"id":"independent-backup","cost":2,"add":{"id":"independent-backup","capacity":3,"serves":["north","east","south"]},"exposed_to":[]}
+  ]
+}
